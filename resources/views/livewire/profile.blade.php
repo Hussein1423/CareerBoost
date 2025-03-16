@@ -105,10 +105,16 @@
 
     <!-- Alpine.js Logic -->
     <script>
+        window.env =
+    {
+    API_KEY: "{{ env('API_KEY') }}",
+    MODEL: "{{ env('MODEL') }}"
+    };
         document.addEventListener('alpine:init', () => {
+
     Alpine.data('jobDesc', () => ({
-        API_KEY: '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',
-      MODEL: 'deepseek/deepseek-r1:free',
+        API_KEY: window.env.API_KEY,
+        MODEL: window.env.MODEL,
 
       jobTitle: '',
       jobDescription: '',
@@ -184,7 +190,7 @@
           });
 
           const data = await response.json();
-          console.log(data);
+
           const generatedText = data.choices?.[0]?.message?.content || '';
           if (this.isUnknownJob(generatedText)) {
             this.errors.desc = 'عذرًا، لم نتمكن من التعرف على هذه الوظيفة. يرجى إدخال اسم وظيفة أوضح أو تقديم المزيد من التفاصيل.';

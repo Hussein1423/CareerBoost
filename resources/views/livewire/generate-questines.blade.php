@@ -60,16 +60,21 @@
         <!-- Button to start the interview (generate questions) -->
         <button type="button" class="btn btn-lg btn-dark mt-3 px-3" @click="generateQuestions" :disabled="isLoading">
             <span x-show="!isLoading">بدأ المقابلة</span>
-            <span x-show="isLoading">جاري التوليد...</span>
+            <span x-show="isLoading">جاري الانشاء...</span>
         </button>
     </div>
 
     <!-- Alpine.js Logic -->
     <script>
+        window.env =
+    {
+    API_KEY: "{{ env('API_KEY') }}",
+    MODEL: "{{ env('MODEL') }}"
+    };
         document.addEventListener('alpine:init', () => {
       Alpine.data('questionsGen', () => ({
-        API_KEY: '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',
-      MODEL: 'deepseek/deepseek-r1-zero:free',
+        API_KEY: window.env.API_KEY,
+    MODEL: window.env.MODEL,
 
         isLoading: false,
         errors: null,
