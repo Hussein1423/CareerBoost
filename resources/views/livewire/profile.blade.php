@@ -38,14 +38,11 @@
         font-size: 0.9rem;
     }
 </style>
-</head>
 
-<body>
-
-    <div x-data="jobDesc()" class="min-h-screen flex flex-col justify-between">
-        <!-- Page Content -->
-        <div class="form-container">
-            <h3 class="text-end mb-4">ارفع سيرتك الذاتية وأدخل المسمى الوظيفي</h3>
+<div x-data="jobDesc()" class="min-h-screen flex flex-col justify-between">
+    <!-- Page Content -->
+    <div class="form-container">
+        <h3 class="text-end mb-4">ارفع سيرتك الذاتية وأدخل المسمى الوظيفي</h3>
 
             <!-- Use Alpine bindings and events -->
             <form @submit.prevent="saveData">
@@ -71,14 +68,14 @@
                     <div x-text="errors.desc" class="text-danger"></div>
                 </div>
 
-                <!-- Generate Description Button -->
+            <!-- Generate Description Button -->
 
-                <!-- Submit (Save) Button -->
-                <button type="submit" class="btn btn-primary w-100">
-                    الانتقال إلى الخطوة التالية
-                </button>
-            </form>
-        </div>
+            <!-- Submit (Save) Button -->
+            <button type="submit" class="btn btn-primary w-100">
+                الانتقال إلى الخطوة التالية
+            </button>
+        </form>
+    </div>
 
         <!-- Footer -->
         <footer class="footer bg-dark text-light mt-auto">
