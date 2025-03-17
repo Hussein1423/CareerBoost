@@ -37,17 +37,23 @@
 
     <!-- Alpine.js Logic -->
     <script>
+        window.env =
+    {
+    API_KEY: "{{ env('API_KEY') }}",
+    MODEL: "{{ env('MODEL') }}"
+    };
         document.addEventListener('alpine:init', () => {
       Alpine.data('questionsGen', () => ({
-        API_KEY: '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',
-      MODEL: 'deepseek/deepseek-r1-zero:free',
+        API_KEY: window.env.API_KEY,
+    MODEL: window.env.MODEL,
 
         isLoading: false,
         errors: null,
         jobTitle: 'وظيفة غير محددة',
+        description: '',
         technicalQuestions: [],
         softQuestions: [],
-        questionTypes: { technical: false, soft: false },
+        questionTypes: { technical: true, soft: true },
         selectedCard: null, // Added property for card selection
 
         init() {
@@ -55,6 +61,7 @@
           const savedData = localStorage.getItem('jobData');
           if (savedData) {
             this.jobTitle = JSON.parse(savedData).title;
+            this.description = JSON.parse(savedData).description;
           }
         },
 
@@ -70,6 +77,7 @@
 
 technicalQuestionsTemplate() {
     return `أنشئ قائمة أسئلة مقابلة عمل بالعربية للوظيفة: "${this.jobTitle}"
+    و اعتمادا على "${this.description}"
 ━━━━━━━━━━━━━━━━━━━━━━━
 المتطلبات:
 - الأسئلة التقنية فقط (بدون أسئلة ناعمة)
@@ -80,6 +88,7 @@ technicalQuestionsTemplate() {
 
 softQuestionsTemplate() {
     return `أنشئ قائمة أسئلة مقابلة عمل بالعربية للوظيفة: "${this.jobTitle}"
+       و اعتمادا على "${this.description}"
 ━━━━━━━━━━━━━━━━━━━━━━━
 المتطلبات:
 - الأسئلة الناعمة فقط (بدون أسئلة تقنية)
@@ -89,6 +98,7 @@ softQuestionsTemplate() {
 
 bothQuestionsTemplate() {
     return `أنشئ قائمة أسئلة مقابلة عمل بالعربية للوظيفة: "${this.jobTitle}"
+       و اعتمادا على "${this.description}"
 ━━━━━━━━━━━━━━━━━━━━━━━
 المتطلبات:
 ### الأسئلة التقنية ###
