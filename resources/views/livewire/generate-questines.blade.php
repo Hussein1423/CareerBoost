@@ -1,33 +1,33 @@
-<style>
-    .card {
-        transition: transform 0.3s;
-        margin: 10px;
-        height: 100%;
-        border-radius: 15px;
-    }
+<div>
 
-    .card:hover {
-        transform: translateY(-5px);
-    }
+    <style>
+        .card {
+            transition: transform 0.3s;
+            margin: 10px;
+            height: 100%;
+            border-radius: 15px;
+        }
 
-    .card img {
-        width: 40%;
-        margin: auto;
-        height: auto;
-    }
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-    .container {
-        margin-top: 5rem;
-    }
+        .card img {
+            width: 40%;
+            margin: auto;
+            height: auto;
+        }
 
-    .selected {
-        border: 4px solid #000 !important;
-        transition: all 0.3s;
-    }
-</style>
-</head>
+        .container {
+            margin-top: 5rem;
+        }
 
-<body>
+        .selected {
+            border: 4px solid #000 !important;
+            transition: all 0.3s;
+        }
+    </style>
+
     <!-- Wrap the page in the Alpine component -->
     <div class="container text-center" x-data="questionsGen()">
         <div class="row my-4">
@@ -259,3 +259,4 @@ bothQuestionsTemplate() {
       }));
     });
     </script>
+</div>
