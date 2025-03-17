@@ -4,8 +4,7 @@ use App\Livewire\CareerAI\AiQuestions;
 use App\Livewire\CareerAI\GenerateQuestines;
 use App\Livewire\CareerAI\Questionnaire;
 use App\Livewire\CareerAI\UplaodJobProfile;
-use App\Livewire\Counter;
-use App\Livewire\Profile;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', UplaodJobProfile::class);

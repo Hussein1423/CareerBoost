@@ -1,3 +1,6 @@
+@push('cssContent')
+<link rel="stylesheet" href="{{asset('careerAI-css/AI-questions.css')}}">
+@endpush
 <div dir="rtl">
 
     <div class="container d-flex justify-content-center align-items-center vh-100">

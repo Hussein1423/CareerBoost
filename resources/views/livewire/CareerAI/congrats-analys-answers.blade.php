@@ -1,5 +1,7 @@
+@push('cssContent')
+<link rel="stylesheet" href="{{asset('careerAI-css/congrats.css')}}">
+@endpush
 <div dir="rtl" class="d-flex justify-content-center align-items-center" style="height: 90vh;">
-
     <div class="container text-center">
         <h3>تهانينا! <span class="fs-3">🎉</span> تم إرسال مقابلتك بنجاح.</h3>
         <p class="lead"></p>

@@ -1,5 +1,7 @@
+@push('cssContent')
+<link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
+@endpush
 <div>
-
     <div x-data="jobDesc()" class="min-h-screen flex flex-col justify-between">
         <!-- Page Content -->
         <div class="form-container">
@@ -205,7 +207,7 @@
                     }
 
                     // انتقل بعد تحديث localStorage
-                    window.location.href = 'http://127.0.0.1:8000/generateQuestines';
+                    window.location.href = 'http://127.0.0.1:8000/interview-type';
                 }
 
 

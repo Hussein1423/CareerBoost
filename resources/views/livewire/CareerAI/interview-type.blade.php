@@ -1,3 +1,6 @@
+@push('cssContent')
+<link rel="stylesheet" href="{{asset('careerAI-css/interviewType.css')}}">
+@endpush
 <div>
     <!-- Wrap the page in the Alpine component -->
     <div class="container text-center" x-data="questionsGen()">

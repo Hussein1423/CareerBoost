@@ -1,3 +1,6 @@
+@push('cssContent')
+<link rel="stylesheet" href="{{asset('careerAI-css/reportAnalysis.css')}}">
+@endpush
 <div lang="ar" dir="rtl">
 
 

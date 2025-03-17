@@ -1,6 +1,7 @@
+@push('cssContent')
+<link rel="stylesheet" href="{{asset('careerAI-css/welcome.css')}}">
+@endpush
 <div lang="ar" dir="rtl">
-
-
     <section class="container text-center">
         <h2>تعرف على نفسك بشكل أفضل</h2>
         <p class="fs-4">باستخدام الذكاء الاصطناعي، يمكن لأي شخص إجراء مقابلة والحصول على تحليل لكفاءاته وشخصيته وفحص درجة السيرة

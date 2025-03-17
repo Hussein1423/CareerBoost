@@ -1,6 +1,7 @@
+@push('cssContent')
+<link rel="stylesheet" href="{{asset('careerAI-css/questions-form.css')}}">
+@endpush
 <div>
-
-
     <div x-data="jobDesc()" class="min-h-screen flex flex-col justify-between">
         <!-- Page Content -->
         <div class="form-container">

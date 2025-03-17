@@ -13,15 +13,11 @@
         integrity="sha512-... your integrity key ..." crossorigin="anonymous" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
-    <link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
-    <link rel="stylesheet" href="{{asset('careerAI-css/congrats.css')}}">
-    <link rel="stylesheet" href="{{asset('careerAI-css/interviewType.css')}}">
-    <link rel="stylesheet" href="{{asset('careerAI-css/questions-form.css')}}">
-    <link rel="stylesheet" href="{{asset('careerAI-css/reportAnalysis.css')}}">
-    <link rel="stylesheet" href="{{asset('careerAI-css/welcome.css')}}">
 
 
+
+
+    @stack('cssContent')
 
 
 </head>
