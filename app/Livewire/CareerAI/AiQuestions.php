@@ -8,6 +8,6 @@ class AiQuestions extends Component
 {
     public function render()
     {
-        return view('livewire.careerAI.ai-questions');
+        return view('livewire.CareerAI.ai-questions');
     }
 }

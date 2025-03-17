@@ -1,33 +1,4 @@
-<style>
-    .card {
-        transition: transform 0.3s;
-        margin: 10px;
-        height: 100%;
-        border-radius: 15px;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-    }
-
-    .card img {
-        width: 40%;
-        margin: auto;
-        height: auto;
-    }
-
-    .container {
-        margin-top: 5rem;
-    }
-
-    .selected {
-        border: 4px solid #000 !important;
-        transition: all 0.3s;
-    }
-</style>
-</head>
-
-<body>
+<div>
     <!-- Wrap the page in the Alpine component -->
     <div class="container text-center" x-data="questionsGen()">
         <div class="row my-4">
@@ -254,3 +225,4 @@ bothQuestionsTemplate() {
       }));
     });
     </script>
+</div>

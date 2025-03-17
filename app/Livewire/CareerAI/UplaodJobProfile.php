@@ -1,14 +1,12 @@
 <?php
-namespace App\Livewire;
+
+namespace App\Livewire\CareerAI;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Http;
 
-class Profile extends Component
+class UplaodJobProfile extends Component
 {
-
-
     use WithFileUploads;
 
     public $cv;
@@ -21,10 +19,8 @@ class Profile extends Component
     }
 
 
-
     public function render()
     {
-        return view('livewire.profile');
+        return view('livewire.careerAI.uplaod-job-profile');
     }
 }
-

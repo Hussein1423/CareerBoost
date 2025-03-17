@@ -1,46 +1,5 @@
-<style>
-    .btn-primary {
-        background-color: #1b355c;
-        border-color: #1b355c;
-    }
+<div>
 
-    .navbar-brand {
-        font-size: 1.5rem;
-        font-weight: bold;
-        font-style: oblique;
-        color: #1b355c;
-    }
-
-    .navbar-brand img {
-        margin-right: -40px;
-    }
-
-    footer {
-        padding: 10px 0;
-        text-align: center;
-        width: 100%;
-    }
-
-    .form-container {
-        background-color: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        max-width: 700px;
-        margin: 40px auto;
-        /* 'mt-5' equivalent in Bootstrap */
-    }
-
-    .text-danger {
-        color: #dc3545;
-        /* or any color you prefer for errors */
-        margin-top: 5px;
-        font-size: 0.9rem;
-    }
-</style>
-</head>
-
-<body>
 
     <div x-data="jobDesc()" class="min-h-screen flex flex-col justify-between">
         <!-- Page Content -->
@@ -106,21 +65,21 @@
     <!-- Alpine.js Logic -->
     <script>
         document.addEventListener('alpine:init', () => {
-    Alpine.data('jobDesc', () => ({
-        API_KEY: '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',
-      MODEL: 'deepseek/deepseek-r1:free',
+            Alpine.data('jobDesc', () => ({
+                API_KEY: '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',
+                MODEL: 'deepseek/deepseek-r1:free',
 
-      jobTitle: '',
-      jobDescription: '',
-      isLoading: false,
-      errors: {
-        cv: null,
-        title: null,
-        desc: null
-      },
+                jobTitle: '',
+                jobDescription: '',
+                isLoading: false,
+                errors: {
+                    cv: null,
+                    title: null,
+                    desc: null
+                },
 
-      promptTemplate(jobTitle) {
-        return `أنشئ وصفًا وظيفيًا بالعربية للوظيفة: "${jobTitle}":━━━━━━━━━━━━━━━━━━━━━━━
+                promptTemplate(jobTitle) {
+                    return `أنشئ وصفًا وظيفيًا بالعربية للوظيفة: "${jobTitle}":━━━━━━━━━━━━━━━━━━━━━━━
 🎯 المهام الأساسية
 ━━━━━━━━━━━━━━━━━━━━━━━
 • تنفيذ [المهام التشغيلية اليومية]
@@ -154,109 +113,110 @@
 ❷ تجنب المصطلحات العامة
 ❸ ركز على الأدوات المستخدمة فعليًا بالمجال
 ◆ إذا كانت الوظيفة غير معروفة، اطلب من المستخدم توضيحها بدلاً من إنشاء وصف عام`;
-      },
+                },
 
-      // Generate Job Description from API
-      async generateDescription() {
-        this.clearErrors();
+                // Generate Job Description from API
+                async generateDescription() {
+                    this.clearErrors();
 
-        if (!this.jobTitle) {
-          this.errors.title = 'يرجى إدخال اسم الوظيفة أولاً';
-          return;
-        }
+                    if (!this.jobTitle) {
+                        this.errors.title = 'يرجى إدخال اسم الوظيفة أولاً';
+                        return;
+                    }
 
-        try {
-          this.isLoading = true;
-          const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${this.API_KEY}`,
-              'Content-Type': 'application/json',
-              'HTTP-Referer': window.location.href,
-              'X-Title': 'Job Description Generator'
-            },
-            body: JSON.stringify({
-              model: this.MODEL,
-              messages: [
-                { role: 'user', content: this.promptTemplate(this.jobTitle) }
-              ]
-            })
-          });
+                    try {
+                        this.isLoading = true;
+                        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${this.API_KEY}`,
+                                'Content-Type': 'application/json',
+                                'HTTP-Referer': window.location.href,
+                                'X-Title': 'Job Description Generator'
+                            },
+                            body: JSON.stringify({
+                                model: this.MODEL,
+                                messages: [
+                                    { role: 'user', content: this.promptTemplate(this.jobTitle) }
+                                ]
+                            })
+                        });
 
-          const data = await response.json();
-          console.log(data);
-          const generatedText = data.choices?.[0]?.message?.content || '';
-          if (this.isUnknownJob(generatedText)) {
-            this.errors.desc = 'عذرًا، لم نتمكن من التعرف على هذه الوظيفة. يرجى إدخال اسم وظيفة أوضح أو تقديم المزيد من التفاصيل.';
-            this.jobDescription = '';
-          } else {
-            this.jobDescription = generatedText;
-          }
-        console.log(this.jobDescription);
-        }
-        catch (error) {
-          this.errors.desc = `خطأ في التوليد: ${error.message}`;
-        } finally {
-          this.isLoading = false;
-        }
-      },
+                        const data = await response.json();
+                        console.log(data);
+                        const generatedText = data.choices?.[0]?.message?.content || '';
+                        if (this.isUnknownJob(generatedText)) {
+                            this.errors.desc = 'عذرًا، لم نتمكن من التعرف على هذه الوظيفة. يرجى إدخال اسم وظيفة أوضح أو تقديم المزيد من التفاصيل.';
+                            this.jobDescription = '';
+                        } else {
+                            this.jobDescription = generatedText;
+                        }
+                        console.log(this.jobDescription);
+                    }
+                    catch (error) {
+                        this.errors.desc = `خطأ في التوليد: ${error.message}`;
+                    } finally {
+                        this.isLoading = false;
+                    }
+                },
 
-      // Basic check if the API returned an "unknown" job
-      isUnknownJob(text) {
-        const unknownIndicators = [
-          /\[.*?\]/g, // اكتشاف الأقواس الفارغة
-          /\.\.\./g,  // اكتشاف النقاط المتتالية
-          /غير معروف/gi,
-          /يرجى توضيح/gi,
-          /المهام التشغيلية اليومية/g
-        ];
-        return unknownIndicators.some(pattern => pattern.test(text));
-      },
+                // Basic check if the API returned an "unknown" job
+                isUnknownJob(text) {
+                    const unknownIndicators = [
+                        /\[.*?\]/g, // اكتشاف الأقواس الفارغة
+                        /\.\.\./g,  // اكتشاف النقاط المتتالية
+                        /غير معروف/gi,
+                        /يرجى توضيح/gi,
+                        /المهام التشغيلية اليومية/g
+                    ];
+                    return unknownIndicators.some(pattern => pattern.test(text));
+                },
 
-      // Validate File Input
-      validateFile(e) {
-        const file = e.target.files[0];
-        this.errors.cv = null;
+                // Validate File Input
+                validateFile(e) {
+                    const file = e.target.files[0];
+                    this.errors.cv = null;
 
-        if (!file) return;
+                    if (!file) return;
 
-        const validTypes = [
-          'application/pdf',
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        ];
-        const maxSize = 2 * 1024 * 1024; // 2MB
+                    const validTypes = [
+                        'application/pdf',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                    ];
+                    const maxSize = 2 * 1024 * 1024; // 2MB
 
-        if (!validTypes.includes(file.type)) {
-          this.errors.cv = 'نوع الملف غير مدعوم';
-          e.target.value = '';
-        } else if (file.size > maxSize) {
-          this.errors.cv = 'الحجم الأقصى 2MB';
-          e.target.value = '';
-        }
-      },
+                    if (!validTypes.includes(file.type)) {
+                        this.errors.cv = 'نوع الملف غير مدعوم';
+                        e.target.value = '';
+                    } else if (file.size > maxSize) {
+                        this.errors.cv = 'الحجم الأقصى 2MB';
+                        e.target.value = '';
+                    }
+                },
 
-      // Save data to localStorage and go to next page
-      saveData() {
-        this.clearErrors();
+                // Save data to localStorage and go to next page
+                saveData() {
+                    this.clearErrors();
 
-        if (!this.jobTitle || !this.jobDescription) {
-          alert('يرجى إكمال جميع الحقول المطلوبة');
-          return;
-        }
+                    if (!this.jobTitle || !this.jobDescription) {
+                        alert('يرجى إكمال جميع الحقول المطلوبة');
+                        return;
+                    }
 
-        // Store data in localStorage
-        localStorage.setItem('jobData', JSON.stringify({
-          title: this.jobTitle,
-          description: this.jobDescription
-        }));
+                    // Store data in localStorage
+                    localStorage.setItem('jobData', JSON.stringify({
+                        title: this.jobTitle,
+                        description: this.jobDescription
+                    }));
 
-        // Navigate to the next page
-        window.location.href = 'http://127.0.0.1:8000/generateQuestines';
-      },
+                    // Navigate to the next page
+                    window.location.href = 'http://127.0.0.1:8000/generateQuestines';
+                },
 
-      clearErrors() {
-        this.errors = { cv: null, title: null, desc: null };
-      }
-    }));
-  });
+                clearErrors() {
+                    this.errors = { cv: null, title: null, desc: null };
+                }
+            }));
+        });
     </script>
+</div>

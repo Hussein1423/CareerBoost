@@ -1,6 +1,6 @@
 <?php
 // app/Http/Livewire/Questionnaire.php
-namespace App\Livewire;
+namespace App\Livewire\CareerAI;
 
 use Livewire\Component;
 
@@ -40,7 +40,8 @@ class Questionnaire extends Component
     public function render()
     {
 
-        return view('livewire.questionnaire', [
-'currentQuestion' => $this->questions[$this->currentCategory][$this->currentQuestionIndex] ?? null        ]);
+        return view('livewire.careerAI.questionnaire', [
+            'currentQuestion' => $this->questions[$this->currentCategory][$this->currentQuestionIndex] ?? null
+        ]);
     }
 }
