@@ -1,11 +1,11 @@
 @push('cssContent')
-<link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
+    <link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
 @endpush
 <div>
-    <div x-data="jobDesc()" class="min-h-screen flex flex-col justify-between">
+    <div x-data="jobDesc()" class=" flex flex-col justify-between">
         <!-- Page Content -->
-        <div class="form-container">
-            <h3 class="text-end mb-4">ارفع سيرتك الذاتية وأدخل المسمى الوظيفي</h3>
+        <div class="form-container col-4">
+            <h5 class="text-end mb-4">ارفع سيرتك الذاتية وأدخل المسمى الوظيفي</h5>
 
             <!-- Use Alpine bindings and events -->
             <form @submit.prevent="saveData">
@@ -34,19 +34,12 @@
                 <!-- Generate Description Button -->
 
                 <!-- Submit (Save) Button -->
-                <button type="submit" class="btn btn-primary w-100">
+                <button type="submit" class="btn btn-dark w-100">
                     الانتقال إلى الخطوة التالية
                 </button>
             </form>
         </div>
 
-        <!-- Footer -->
-        <footer class="footer bg-dark text-light mt-auto">
-            <div class="container-fluid">
-                <p>© 2025 Falcons. جميع الحقوق محفوظة.</p>
-                <p>صُمم لمساعدتك على النجاح في حياتك المهنية.</p>
-            </div>
-        </footer>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>

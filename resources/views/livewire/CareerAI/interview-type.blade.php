@@ -1,7 +1,9 @@
 @push('cssContent')
 <link rel="stylesheet" href="{{asset('careerAI-css/interviewType.css')}}">
 @endpush
-<div>
+
+<section>
+
     <!-- Wrap the page in the Alpine component -->
     <div class="container text-center" x-data="questionsGen()">
         <div class="row my-4">
@@ -32,9 +34,9 @@
             </div>
         </div>
         <!-- Button to start the interview (generate questions) -->
-        <button type="button" class="btn btn-lg btn-dark mt-3 px-3" @click="generateQuestions" :disabled="isLoading">
+        <button type="button" class="btn btn-lg btn-dark my-3 px-3" @click="generateQuestions" :disabled="isLoading">
             <span x-show="!isLoading">بدأ المقابلة</span>
-            <span x-show="isLoading">جاري التوليد...</span>
+            <span x-show="isLoading">جاري انشاء الاسئلة المناسبة...</span>
         </button>
     </div>
 
@@ -238,4 +240,4 @@ bothQuestionsTemplate() {
       }));
     });
     </script>
-</div>
+</section>

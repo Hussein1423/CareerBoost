@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
@@ -22,12 +22,39 @@
 
 </head>
 
-<body class="">
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    @include('livewire.careerAI.shared.nav')
 
-    <div class="">
+    <!-- Main Content -->
+    <div class="flex-grow-1">
         {{ $slot }}
     </div>
 
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light py-4 mt-auto">
+        <div class="container">
+            <div class="row text-center">
+                <!-- Copyright Text -->
+                <div class="col-12 mb-3">
+                    <p class="mb-0">© 2025 CareerAI. جميع الحقوق محفوظة.</p>
+                    <p class="mb-0">صُمم لمساعدتك على النجاح في حياتك المهنية.</p>
+                </div>
+
+                <!-- Social Media Icons -->
+                <div class="col-12">
+                    <a href="#" class="text-light ms-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-light ms-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-light ms-3"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
