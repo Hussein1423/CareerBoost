@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
 @endpush
 <div>
-    <div x-data="jobDesc()" class=" flex flex-col justify-between">
+    <div x-data="jobDesc()" x-init="watchJobDescription" class="flex flex-col justify-between">
         <!-- Page Content -->
         <div class="form-container col-4">
             <h5 class="text-end mb-4">ارفع سيرتك الذاتية وأدخل المسمى الوظيفي</h5>
@@ -17,21 +17,40 @@
                     <div x-text="errors.cv" class="text-danger"></div>
                 </div>
 
-                <!-- Job Title -->
+                <!-- Job Title Search Input -->
                 <div class="mb-3">
                     <label class="form-label">المسمى الوظيفي المطلوب:</label>
-                    <input type="text" class="form-control" placeholder="مثلاً: مهندس برمجيات" x-model="jobTitle">
+                    <input type="text" class="form-control" placeholder="مثلاً: مهندس برمجيات" x-model="jobTitleQuery"
+                        @click="showList = true">
                     <div x-text="errors.title" class="text-danger"></div>
                 </div>
+
+                <div class="position-relative">
+                    <!-- Filtered Job Titles List -->
+                    <div class="parent position-absolute bg-light w-100 p-3 rounded-3 shadow" x-show="showList"
+                        @click.away="showList = false">
+                        <ul class="list-unstyled rounded-3 card-control">
+                            <template x-for="position in filteredPositions" :key="position . id">
+                                <li class="w-100 text-end p-2 pointer" @click="selectPosition(position)">
+                                    <span x-text="position.name"></span>
+                                </li>
+                            </template>
+                            <template x-if="filteredPositions.length === 0">
+                                <li class="p-2 text-muted text-end">No job titles found.</li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+
                 <!-- Job Description (Generated) -->
                 <div class="mb-4">
                     <label class="form-label">وصف الوظيفة:</label>
                     <textarea class="form-control" rows="4" placeholder="مثلاً: مسؤول عن تطوير التطبيقات البرمجية"
-                        x-model="jobDescription"></textarea>
+                        x-model="jobDescription" x-init="autoResize($el)" x-on:input="autoResize($el)"
+                        style="resize: none; overflow: hidden; max-height: 400px;"></textarea>
                     <div x-text="errors.desc" class="text-danger"></div>
                 </div>
 
-                <!-- Generate Description Button -->
 
                 <!-- Submit (Save) Button -->
                 <button type="submit" class="btn btn-dark w-100">
@@ -43,6 +62,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
     <!-- Alpine.js Logic -->
     <script>
         window.env =
@@ -208,10 +228,53 @@
 
                 clearErrors() {
                     this.errors = { cv: null, title: null, desc: null };
-                }
+                },
+
+
+                // job title functions
+                positions: @json($positions),
+                jobTitleQuery: '',
+                showList: false,
+                selectedPosition: null,
+
+                get filteredPositions() {
+                    return this.positions.filter(position =>
+                        position.name.toLowerCase().includes(this.jobTitleQuery.toLowerCase())
+                    );
+                },
+
+                selectPosition(position) {
+                    this.selectedPosition = position;
+                    this.jobDescription = position.default_description;
+                    this.jobTitleQuery = position.name; // Update input field with selected job title
+                    this.showList = false; // Hide the list after selection
+                },
+
+
+
             }
             )
             );
         });
     </script>
+
+    <script>
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight}px`;
+            if (textarea.scrollHeight > 400) {
+                textarea.style.overflowY = 'auto';
+            } else {
+                textarea.style.overflowY = 'hidden';
+            }
+        }
+
+        function watchJobDescription() {
+            this.$watch('jobDescription', (value) => {
+                const textarea = this.$el.querySelector('textarea');
+                autoResize(textarea);
+            });
+        }
+    </script>
+
 </div>

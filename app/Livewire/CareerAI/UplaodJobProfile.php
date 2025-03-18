@@ -2,6 +2,7 @@
 
 namespace App\Livewire\CareerAI;
 
+use App\Models\Position;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -13,9 +14,10 @@ class UplaodJobProfile extends Component
     public $jobTitle;
     public $jobDescription;
 
-    public function generateDescription()
+    public $positions;
+    public function mount()
     {
-
+        $this->positions = Position::all();
     }
 
 

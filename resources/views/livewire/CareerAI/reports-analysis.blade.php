@@ -11,9 +11,6 @@
             <!-- التبويبات -->
             @include('livewire.CareerAI.shared.sections-nav')
 
-
-
-
             <!-- تحليل الشخصية -->
             <div x-show="activeTab === 'personality'">
                 @include('livewire.CareerAI.shared.personality')

@@ -15,7 +15,7 @@
             </ul>
 
             <!-- Brand/Logo -->
-            <a class="navbar-brand fw-bold" href="/"> <i class="bi bi-stars"></i>CareerAI</a>
+            <a class="navbar-brand fw-bold" href="/"> CareerAI<i class="bi bi-stars"></i></a>
 
             <!-- Toggle Button for Mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

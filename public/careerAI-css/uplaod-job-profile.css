@@ -14,3 +14,19 @@
     margin-top: 5px;
     font-size: 0.9rem;
 }
+
+.card-control {
+    height: 200px;
+    overflow-y: auto;
+    direction: rtl;
+}
+
+
+.pointer{
+    border-radius: 10px;
+}
+.pointer:hover{
+    background: #8dcafc44;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
