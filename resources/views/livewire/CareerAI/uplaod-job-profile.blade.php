@@ -1,5 +1,5 @@
 @push('cssContent')
-    <link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
+<link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
 @endpush
 <div>
     <div x-data="jobDesc()" x-init="watchJobDescription" class="flex flex-col justify-between">
@@ -133,7 +133,10 @@
         ---
         العنوان الوظيفي: ${this.jobTitle}
         الوصف الوظيفي: ${this.jobDescription}
-        الرجاء تقديم النتيجة باللغة العربية.
+     الرجاء تقديم النتيجة باللغة العربية بالكامل
+     وتكون بصيغة
+      بحيث ال key يكون اسم مع score و key الثاني الاسم مع recom json بحيث كل سطر مثل ATS يكون درجته استطيع الوصول لها و النصائح
+     وبقية الاسطر نفس الشيء
 
 
       `;
@@ -197,7 +200,9 @@
                     this.clearErrors();
 
                     if (!this.jobTitle || !this.jobDescription || !this.analyzeCV) {
-                        alert('يرجى إكمال جميع الحقول المطلوبة');
+                        this.errors.cv = 'رفع ملف مطلوب';
+                        this.errors.title = 'اسم الوظيفة مطلوب';
+                        this.errors.desc = 'وصف الوظيفة مطلوب';
                         return;
                     }
 
@@ -219,8 +224,8 @@
                         localStorage.setItem('jobData', JSON.stringify(updatedJobData));
                     }
 
-                    // انتقل بعد تحديث localStorage
-                    window.location.href = 'http://127.0.0.1:8000/interview-type';
+             // انتقل بعد تحديث localStorage
+                    window.location.href = 'http://127.0.0.1:8000/interview_type';
                 }
 
 
@@ -238,6 +243,7 @@
                 selectedPosition: null,
 
                 get filteredPositions() {
+
                     return this.positions.filter(position =>
                         position.name.toLowerCase().includes(this.jobTitleQuery.toLowerCase())
                     );
@@ -246,6 +252,7 @@
                 selectPosition(position) {
                     this.selectedPosition = position;
                     this.jobDescription = position.default_description;
+                    this.jobTitle = position.name;
                     this.jobTitleQuery = position.name; // Update input field with selected job title
                     this.showList = false; // Hide the list after selection
                 },

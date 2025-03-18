@@ -72,10 +72,13 @@
 
         promptTemplate() {
     if (this.questionTypes.technical && this.questionTypes.soft) {
+        console.log(this.bothQuestionsTemplate());
         return this.bothQuestionsTemplate();
     } else if (this.questionTypes.technical) {
+        console.log(this.technicalQuestionsTemplate());
         return this.technicalQuestionsTemplate();
     } else if (this.questionTypes.soft) {
+        console.log(this.softQuestionsTemplate());
         return this.softQuestionsTemplate();
     }
 },
@@ -85,10 +88,10 @@ technicalQuestionsTemplate() {
     و اعتمادا على "${this.description}"
 ━━━━━━━━━━━━━━━━━━━━━━━
 المتطلبات:
-- الأسئلة التقنية فقط (بدون أسئلة ناعمة)
+### الأسئلة التقنية ###
 - ركز على أحدث التقنيات المتعلقة بالوظيفة
 - قم بتضمين أسئلة عن المبادئ الأساسية وأيضًا حل المشكلات
--  لا تزيد و لا تنقص 5 أسئلة فقط يتم تكوينها`;
+- لا تزيد و لا تنقص 5 أسئلة فقط`;
 },
 
 softQuestionsTemplate() {
@@ -96,9 +99,9 @@ softQuestionsTemplate() {
        و اعتمادا على "${this.description}"
 ━━━━━━━━━━━━━━━━━━━━━━━
 المتطلبات:
-- الأسئلة الناعمة فقط (بدون أسئلة تقنية)
+### الأسئلة الناعمة ###
 - تضمين أسئلة عن العمل الجماعي، إدارة الوقت، وحالات افتراضية للتعامل مع الضغوط
--  لا تزيد و لا تنقص 5 أسئلة فقط يتم تكوينها`;
+- لا تزيد و لا تنقص 5 أسئلة فقط `;
 },
 
 bothQuestionsTemplate() {
@@ -109,11 +112,11 @@ bothQuestionsTemplate() {
 ### الأسئلة التقنية ###
 - ركز على أحدث التقنيات المتعلقة بالوظيفة
 - قم بتضمين أسئلة عن المبادئ الأساسية وأيضًا حل المشكلات
-- لا تزيد و لا تنقص 5 أسئلة فقط يتم تكوينها
+- لا تزيد و لا تنقص 5 أسئلة فقط
 
 ### الأسئلة الناعمة ###
 - تضمين أسئلة عن العمل الجماعي، إدارة الوقت، وحالات افتراضية للتعامل مع الضغوط
-- لا تزيد و لا تنقص 5 أسئلة فقط يتم تكوينها`;
+- لا تزيد و لا تنقص 5 أسئلة فقط `;
 }
 ,
 
@@ -122,6 +125,7 @@ bothQuestionsTemplate() {
 
   // Clear previous questions
   sessionStorage.removeItem('questions');
+  sessionStorage.removeItem('answers');
 
   if (this.selectedCard === 1) {
       this.questionTypes = { technical: false, soft: true };
@@ -165,6 +169,9 @@ bothQuestionsTemplate() {
   const content = data.choices?.[0]?.message?.content || '';
   this.parseQuestions(content);
   this.isLoading = false;
+
+  window.location.href = 'http://127.0.0.1:8000/AI_questions';
+
 },
 
 
