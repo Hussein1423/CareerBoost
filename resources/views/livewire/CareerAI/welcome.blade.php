@@ -1,12 +1,13 @@
 @push('cssContent')
-<link rel="stylesheet" href="{{asset('careerAI-css/welcome.css')}}">
+    <link rel="stylesheet" href="{{asset('careerAI-css/welcome.css')}}">
 @endpush
 <div lang="ar" dir="rtl">
     <section class="container text-center">
         <h2>تعرف على نفسك بشكل أفضل</h2>
-        <p class="fs-4">باستخدام الذكاء الاصطناعي، يمكن لأي شخص إجراء مقابلة والحصول على تحليل لكفاءاته وشخصيته وفحص درجة السيرة
+        <p class="fs-4">باستخدام الذكاء الاصطناعي، يمكن لأي شخص إجراء مقابلة والحصول على تحليل لكفاءاته وشخصيته وفحص
+            درجة السيرة
             الذاتية.</p>
-        <button type="submit" class="btn btn-dark fs-4">ابدا المقابلة</button>
+        <a href="{{route('Uplaod_Job_Profile')}}" class="btn btn-dark fs-4">ابدا المقابلة</a>
     </section>
 
     <div class="container mt-4">
@@ -23,13 +24,17 @@
                 </ul>
             </div>
             <div class="col-md-6">
-                <div class="img-placeholder-left">صورة تحليل الشخصية</div>
+                <div class="img-placeholder-left"> <img src="{{ asset('image/personalAnalysis.jpg') }}"
+                        alt="التقرير التحليلي">
+                </div>
             </div>
         </section>
 
         <section class="row align-items-center mt-4">
             <div class="col-md-6">
-                <div class="img-placeholder">صورة تقرير الأداء</div>
+                <div class="img-placeholder">
+                    <img src="{{ asset('image/performace.jpg') }}" alt="التقرير الأدا��">
+                </div>
             </div>
             <div class="col-md-6 fs-4" dir="ltr">
                 <h3 class="section-header fw-bold">تقرير الأداء</h3>
@@ -56,7 +61,9 @@
                 </ul>
             </div>
             <div class="col-md-6">
-                <div class="img-placeholder-left">صورة المقابلة السلوكية</div>
+                <div class="img-placeholder-left">
+                    <img src="{{ asset('image/begavior.avif') }}" alt="التقرير السلوكي والمهارات">
+                </div>
             </div>
         </section>
 
@@ -73,7 +80,9 @@
                 </ul>
             </div>
             <div class="col-md-6">
-                <div class="img-placeholder">صورة تقرير الأداء</div>
+                <div class="img-placeholder">
+                    <img src="{{ asset('image/resumeAnalysis.jpg') }}" alt="التقرير الأدا��">
+                </div>
             </div>
         </section>
 
