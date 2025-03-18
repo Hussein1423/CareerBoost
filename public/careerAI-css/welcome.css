@@ -18,7 +18,7 @@
     font-size: 18px;
     border: #353535 4px solid;
     border-right: 0px;
-    background-color: #f0f0f0;
+    background-color: #fff;
     /* لون خلفية Placeholder */
     color: #666;
     /* لون النص */
@@ -37,7 +37,7 @@
     border: #353535 4px solid;
     border-left: 0px;
 
-    background-color: #f0f0f0;
+    background-color: #fff;
     /* لون خلفية Placeholder */
     color: #666;
     /* لون النص */
@@ -61,4 +61,8 @@ section {
 
 .bolder-weight{
     font-weight: 500;
+}
+
+img{
+    height: 100%;
 }
