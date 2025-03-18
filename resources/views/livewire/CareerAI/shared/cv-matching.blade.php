@@ -33,51 +33,77 @@
     <div class="highlight card shadow-sm p-4 rounded-4 mt-4">
         <h5 class="fw-bold mb-3"><i class="bi bi-stars"></i> تقييم السيرة الذاتية العام: <span
                 :class="getOverallScoreColor(overallScore)" x-text="overallScore + '/10'"></span></h5>
-
-                <p>تفاصيل خاصةومقترحة على السيرة الذاتية</p>
-            </div>
+        <p>تفاصيل خاصة ومقترحة على السيرة الذاتية</p>
+    </div>
 </div>
 
 <script>
     document.addEventListener('alpine:init', () => {
-        Alpine.data('cvAnalysis', () => ({
-            selectedIndex: 0,
+        Alpine.data('cvAnalysis', () => {
+            const jobData = JSON.parse(localStorage.getItem('jobData')) || {};
+            let cvData = jobData.cv || {};
+            cvData = cvData.replace(/^\s*\\boxed\{\s*\{/, '{').replace(/\}\s*\}\s*$/, '}'); // إزالة }}
+            
+            // استبدال الفواصل الزائدة (إن وجدت)
+            cvData = cvData.replace(/,(\s*[\]\}])/g, '$1');
+            
+            cvData = JSON.parse(cvData);
+            
+            // Define section order and Arabic labels
+            const sectionsOrder = [
+                'Work Experience',
+                'Education',
+                'Skills',
+                'Projects',
+                'Certifications',
+                'Professional Summary',
+                'ATS'
+            ];
+            
+            const sectionLabels = {
+                'Work Experience': 'الخبرة',
+                'Education': 'التعليم',
+                'Skills': 'المهارات',
+                'Projects': 'المشاريع',
+                'Certifications': 'الشهادات',
+                'Professional Summary': 'الملخص المهني',
+                'ATS': 'ATS'
+            };
 
-            percentages: [88, 58, 80, 63, 77, 99], // النسب المئوية
-            labels: [
-                'الخبرة',
-                'التعليم',
-                'المهارات',
-                'المشاريع',
-                'الشهادات',
-                'الملخص المهني'
-            ],
-            descriptions: [
-                'تحليل الخبرة: الخبرة الحالية جيدة ولكن يمكن تعزيزها بإضافة المزيد من التفاصيل حول الإنجازات.',
-                'تحليل التعليم: المؤهلات التعليمية مناسبة للوظيفة.',
-                'تحليل المهارات: المهارات التقنية قوية وتتوافق مع متطلبات الوظيفة.',
-                'تحليل المشاريع: المشاريع المذكورة جيدة ولكن يمكن إضافة المزيد من التفاصيل حول النتائج.',
-                'تحليل الشهادات: الشهادات الحالية مناسبة ولكن يمكن إضافة المزيد لتعزيز الملف الشخصي.',
-                'تحليل الملخص المهني: الملخص جيد ولكن يمكن تحسينه بإضافة إنجازات قابلة للقياس.'
-            ],
+            // Generate dynamic data arrays
+            const percentages = sectionsOrder.map(section => cvData[section]?.score || 0);
+            const labels = sectionsOrder.map(section => sectionLabels[section]);
+            const descriptions = sectionsOrder.map(section => cvData[section]?.recom || '');
 
-            get overallScore() {
-                const total = this.percentages.reduce((sum, percent) => sum + percent, 0);
-                const average = total / this.percentages.length;
-                return (average / 10).toFixed(1);
-            },
+           
+            return {
+                selectedIndex: 0,
+                percentages,
+                labels,
+                descriptions,
 
-            getColor(percent) {
-                if (percent >= 80) return '#28a745'; // أخضر
-                if (percent >= 60) return '#ffc107'; // أصفر
-                return '#dc3545'; // أحمر
-            },
+                get overallScore() {
+                    const total = this.percentages.reduce((sum, percent) => sum + percent, 0);
+                    const average = total / this.percentages.length;
+                    return (average / 10).toFixed(1);
+                },
+                
 
-            getOverallScoreColor(score) {
-                if (score >= 8) return 'text-success'; // أخضر
-                if (score >= 6) return 'text-warning'; // أصفر
-                return 'text-danger'; // أحمر
-            },
-        }));
+                getColor(percent) {
+                    if (percent >= 80) return '#28a745';
+                    if (percent >= 60) return '#ffc107';
+                    return '#dc3545';
+                },
+
+                getOverallScoreColor(score) {
+                
+                    console.log(cvData);
+                    if (score >= 8) return 'text-success';
+                    if (score >= 6) return 'text-warning';
+                    return 'text-danger';
+                },
+
+            };
+        });
     });
 </script>
