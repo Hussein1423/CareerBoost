@@ -1,14 +1,20 @@
 @push('cssContent')
-<link rel="stylesheet" href="{{asset('careerAI-css/AI-questions.css')}}">
+    <link rel="stylesheet" href="{{asset('careerAI-css/AI-questions.css')}}">
 @endpush
 
 <div style="margin-top: 100px">
     <div class="card p-4 my-3" style="width: 100%; max-width: 600px;">
         <h6 class="text-muted mb-3">السؤال <span id="question-number">1</span></h6>
-        <h5 class="mb-4 fw-bold"><i class="bi bi-stars"></i> <span id="question-text">كيف تصف مهاراتك في التواصل؟</span></h5>
-        <div class="textarea-container mt-3">
-            <textarea id="answer" class="form-control mb-4" rows="4" placeholder="اكتب إجابتك هنا."></textarea>
-            <button class="btn btn-dark" id="submit-button">إرسال</button>
+        <h5 class="mb-4 fw-bold"><i class="bi bi-stars"></i> <span id="question-text">كيف تصف مهاراتك في التواصل؟</span>
+        </h5>
+        <div class="textarea-container mt-3" x-data="{ answer: '' }">
+            <form action="">
+                @csrf
+                <textarea id="answer" class="form-control mb-4" rows="4" placeholder="اكتب إجابتك هنا."
+                    x-model="answer"></textarea>
+                <button type="submit" class="btn btn-dark" id="submit-button"
+                    x-bind:disabled="answer.trim() === ''">إرسال</button>
+            </form>
         </div>
     </div>
 </div>

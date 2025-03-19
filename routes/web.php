@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\CareerAI\AiQuestions;
+use App\Livewire\CareerAI\CongratsAnalysAnswers;
 use App\Livewire\CareerAI\GenerateQuestines;
 use App\Livewire\CareerAI\Questionnaire;
 use App\Livewire\CareerAI\ReportsAnalysis;
@@ -17,3 +18,4 @@ Route::get('/questionnaire', Questionnaire::class)->name('questionnaire');
 Route::get('/AI_questions', AiQuestions::class)->name('AiQuestions');
 Route::get('/Uplaod_Job_Profile', UplaodJobProfile::class)->name('Uplaod_Job_Profile');
 Route::get('/ReportsAnalysis', ReportsAnalysis::class)->name('ReportsAnalysis');
+Route::get('/congrats', CongratsAnalysAnswers::class)->name('congrats');

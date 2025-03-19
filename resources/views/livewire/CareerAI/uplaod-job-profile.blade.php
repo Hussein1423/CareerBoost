@@ -1,5 +1,5 @@
 @push('cssContent')
-<link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
+    <link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
 @endpush
 <div>
     <div x-data="jobDesc()" x-init="watchJobDescription" class="flex flex-col justify-between">
@@ -27,7 +27,7 @@
 
                 <div class="position-relative">
                     <!-- Filtered Job Titles List -->
-                    <div class="parent position-absolute bg-light w-100 p-3 rounded-3 shadow" x-show="showList"
+                    <div class="parent position-absolute bg-light w-100 p-3 rounded-3 shadow z-3" x-show="showList"
                         @click.away="showList = false">
                         <ul class="list-unstyled rounded-3 card-control">
                             <template x-for="position in filteredPositions" :key="position . id">
@@ -51,13 +51,27 @@
                     <div x-text="errors.desc" class="text-danger"></div>
                 </div>
 
-
                 <!-- Submit (Save) Button -->
-                <button type="submit" class="btn btn-dark w-100">
-                    الانتقال إلى الخطوة التالية
+                <button type="submit" class="btn btn-dark w-100 button" :class="isLoading === false ? ' ' : ''">
+                    <div x-show="isLoading === true">
+                        <div class="d-flex gap-2 align-items-center justify-content-center">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            يتم تحليل البيانات ثواني من فضلك...
+                            <span class="gradient-container">
+                                <span class="gradient"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <span x-show="isLoading === false">
+                        متابعة
+                    </span>
                 </button>
+
+
             </form>
+
         </div>
+
 
     </div>
 
@@ -233,8 +247,10 @@ ${exFile}
                         localStorage.setItem('jobData', JSON.stringify(updatedJobData));
                     }
 
-             // انتقل بعد تحديث localStorage
-                    window.location.href = 'http://127.0.0.1:8000/interview_type';
+                    // انتقل بعد تحديث localStorage
+                    if (!this.errors.cv) {
+                        window.location.href = 'http://127.0.0.1:8000/interview_type';
+                    }
                 }
 
 

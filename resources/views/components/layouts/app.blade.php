@@ -29,33 +29,37 @@
 
 <body class="d-flex flex-column min-vh-100">
     <!-- Navbar -->
-    @include('livewire.careerAI.shared.nav')
+    @if (!Route::is('congrats'))
+        @include('livewire.careerAI.shared.nav')
+    @endif
 
-    <!-- Main Content -->
+
+
     <div class="flex-grow-1">
         {{ $slot }}
     </div>
 
-    <!-- Footer -->
-    <footer class="footer bg-dark text-light py-4 mt-auto">
-        <div class="container">
-            <div class="row text-center">
-                <!-- Copyright Text -->
-                <div class="col-12 mb-3">
-                    <p class="mb-0">© 2025 CareerAI. جميع الحقوق محفوظة.</p>
-                    <p class="mb-0">صُمم لمساعدتك على النجاح في حياتك المهنية.</p>
-                </div>
+    @if (!Route::is('generateQuestines'))
+        <footer class="footer bg-dark text-light py-4 mt-auto">
+            <div class="container">
+                <div class="row text-center">
+                    <!-- Copyright Text -->
+                    <div class="col-12 mb-3">
+                        <p class="mb-0">© 2025 CareerAI. جميع الحقوق محفوظة.</p>
+                        <p class="mb-0">صُمم لمساعدتك على النجاح في حياتك المهنية.</p>
+                    </div>
 
-                <!-- Social Media Icons -->
-                <div class="col-12">
-                    <a href="#" class="text-light ms-3"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-light ms-3"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-light ms-3"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    <!-- Social Media Icons -->
+                    <div class="col-12">
+                        <a href="#" class="text-light ms-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light ms-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light ms-3"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    @endif
 
     <!-- Bootstrap 5 JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

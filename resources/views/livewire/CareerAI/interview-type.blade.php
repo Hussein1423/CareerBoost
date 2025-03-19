@@ -4,7 +4,6 @@
 
 <section>
 
-    <!-- Wrap the page in the Alpine component -->
     <div class="container text-center" x-data="questionsGen()">
         <div class="row my-4">
             <h3 class="my-5">اختر نوع المقابلة التي تريد محاكاتها</h3>
@@ -33,14 +32,28 @@
                 </div>
             </div>
         </div>
-        <!-- Button to start the interview (generate questions) -->
-        <button type="button" class="btn btn-lg btn-dark my-3 px-3" @click="generateQuestions" :disabled="isLoading">
-            <span x-show="!isLoading">بدأ المقابلة</span>
-            <span x-show="isLoading">جاري انشاء الاسئلة المناسبة...</span>
-        </button>
+
+        <div class="d-flex justify-content-center my-5">
+
+            <button type="button" class="btn btn-lg btn-dark my-3 px-5 button" @click="generateQuestions">
+                <span x-show="!isLoading" >
+                    متابعة
+                </span>
+
+                <!-- Loading State -->
+                <span x-show="isLoading" >
+                    <div class="d-flex gap-2 align-items-center justify-content-center">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        يتم الان تجهيز الاسئلة ثواني من فضلك...
+                        <span class="gradient-container">
+                            <span class="gradient"></span>
+                        </span>
+                    </div>
+                </span>
+            </button>
+        </div>
     </div>
 
-    <!-- Alpine.js Logic -->
     <script>
         window.env =
     {
