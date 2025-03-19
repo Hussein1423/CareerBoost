@@ -19,7 +19,7 @@
 </div>
 
 <script>
-      sessionStorage.removeItem('report');
+    sessionStorage.removeItem('report');
     // قراءة البيانات من sessionStorage
     const questionsData = JSON.parse(sessionStorage.getItem('questions'));
 

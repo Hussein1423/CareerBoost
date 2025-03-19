@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\CareerAI\AiQuestions;
+use App\Livewire\CareerAI\CongratsAnalysAnswers;
 use App\Livewire\CareerAI\GenerateQuestines;
 use App\Livewire\CareerAI\Questionnaire;
 use App\Livewire\CareerAI\ReportsAnalysis;

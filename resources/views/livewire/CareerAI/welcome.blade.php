@@ -7,7 +7,18 @@
         <p class="fs-4">باستخدام الذكاء الاصطناعي، يمكن لأي شخص إجراء مقابلة والحصول على تحليل لكفاءاته وشخصيته وفحص
             درجة السيرة
             الذاتية.</p>
-        <a href="{{route('Uplaod_Job_Profile')}}" class="btn btn-dark fs-4">ابدا المقابلة</a>
+
+        <div class="d-flex w-100 justify-content-center">
+
+            <!-- From Uiverse.io by Na3ar-17 -->
+            <a href="{{route('Uplaod_Job_Profile')}}" class="button bg-dark text-decoration-none mt-3">
+                <span class="label">ابدا المقابلة</span>
+                <span class="gradient-container">
+                    <span class="gradient"></span>
+                </span>
+            </a>
+        </div>
+
     </section>
 
     <div class="container mt-4">
