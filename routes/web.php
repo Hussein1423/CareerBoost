@@ -7,6 +7,7 @@ use App\Livewire\CareerAI\ReportsAnalysis;
 use App\Livewire\CareerAI\UplaodJobProfile;
 
 use App\Livewire\CareerAI\Welcome;
+use App\Livewire\CongratsAnalys;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Welcome::class);
@@ -17,3 +18,4 @@ Route::get('/questionnaire', Questionnaire::class)->name('questionnaire');
 Route::get('/AI_questions', AiQuestions::class)->name('AiQuestions');
 Route::get('/Uplaod_Job_Profile', UplaodJobProfile::class)->name('Uplaod_Job_Profile');
 Route::get('/ReportsAnalysis', ReportsAnalysis::class)->name('ReportsAnalysis');
+Route::get('/cong', CongratsAnalys::class)->name('cong');

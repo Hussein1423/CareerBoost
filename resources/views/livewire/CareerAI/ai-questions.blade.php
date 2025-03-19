@@ -5,8 +5,13 @@
 <div style="margin-top: 100px">
     <div class="card p-4 my-3" style="width: 100%; max-width: 600px;">
         <h6 class="text-muted mb-3">السؤال <span id="question-number">1</span></h6>
-        <h5 class="mb-4 fw-bold"><i class="bi bi-stars"></i> <span id="question-text">كيف تصف مهاراتك في التواصل؟</span></h5>
+        <h5 class="mb-4 fw-bold"><i class="bi bi-stars"></i> <span id="question-text">كيف تصف مهاراتك في التواصل؟</span>
+        </h5>
         <div class="textarea-container mt-3">
+            <!-- رسالة الخطأ -->
+            <div id="error-message" class="text-danger mb-2" style="display: none;">
+                يرجى إدخال إجابة قبل الانتقال إلى السؤال التالي.
+            </div>
             <textarea id="answer" class="form-control mb-4" rows="4" placeholder="اكتب إجابتك هنا."></textarea>
             <button class="btn btn-dark" id="submit-button">إرسال</button>
         </div>
@@ -14,6 +19,7 @@
 </div>
 
 <script>
+      sessionStorage.removeItem('report');
     // قراءة البيانات من sessionStorage
     const questionsData = JSON.parse(sessionStorage.getItem('questions'));
 
@@ -38,6 +44,7 @@
             // إذا انتهت الأسئلة، يمكن إظهار رسالة أو إجراء آخر
             document.getElementById('submit-button').disabled = true;
             document.getElementById('answer').value = ''; // مسح محتوى الـ textarea
+            window.location.href = 'http://127.0.0.1:8000/cong';
         }
     }
 
@@ -46,8 +53,19 @@
 
     // الانتقال إلى السؤال التالي عند النقر على "إرسال"
     document.getElementById('submit-button').addEventListener('click', function () {
+        const currentAnswer = document.getElementById('answer').value.trim(); // الحصول على الإجابة مع إزالة المسافات الزائدة
+
+        // التحقق من أن textarea غير فارغ
+        if (!currentAnswer) {
+            // عرض رسالة الخطأ فوق textarea
+            document.getElementById('error-message').style.display = 'block';
+            return; // إيقاف التنفيذ إذا كانت الإجابة فارغة
+        } else {
+            // إخفاء رسالة الخطأ إذا كانت الإجابة غير فارغة
+            document.getElementById('error-message').style.display = 'none';
+        }
+
         // حفظ الإجابة الحالية في المصفوفة
-        const currentAnswer = document.getElementById('answer').value;
         if (currentQuestionIndex < allQuestions.length) {
             answers.push({
                 question: allQuestions[currentQuestionIndex].text,
@@ -60,6 +78,7 @@
 
         // مسح محتوى الـ textarea قبل الانتقال إلى السؤال التالي
         document.getElementById('answer').value = '';
+        document.getElementById('answer').style.height = 'auto'; // إعادة ضبط الارتفاع التلقائي
 
         currentQuestionIndex++; // زيادة الفهرس للسؤال التالي
         displayCurrentQuestion(); // عرض السؤال الجديد

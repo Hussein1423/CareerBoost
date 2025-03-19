@@ -48,6 +48,10 @@
     MODEL: "{{ env('MODEL') }}"
     };
         document.addEventListener('alpine:init', () => {
+            // Clear previous questions
+  sessionStorage.removeItem('questions');
+  sessionStorage.removeItem('answers');
+  sessionStorage.removeItem('report');
       Alpine.data('questionsGen', () => ({
         API_KEY: window.env.API_KEY,
     MODEL: window.env.MODEL,
@@ -128,9 +132,7 @@ bothQuestionsTemplate() {
         async generateQuestions() {
 
 
-  // Clear previous questions
-  sessionStorage.removeItem('questions');
-  sessionStorage.removeItem('answers');
+
 
   if (this.selectedCard === 1) {
       this.questionTypes = { technical: false, soft: true };

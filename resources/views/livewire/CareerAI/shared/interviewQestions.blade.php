@@ -1,114 +1,212 @@
-<!-- سؤال وإجابة المستخدم -->
-<div x-data="questionNavigation">
-    <div class="card shadow-sm p-4 rounded-4 mb-4">
-        <h5 class="fw-bold mb-2">السؤال <span x-text="currentQuestionIndex + 1"></span>: <span
-                x-text="questions[currentQuestionIndex].text"></span></h5>
-        <p class="p-0">
-            <span class="fw-bold">إجابتك:</span>
-            <span x-text="questions[currentQuestionIndex].answer"></span>
-        </p>
-        <div class="text-start mt-3">
-            <button class="btn btn-dark rounded-3 me-2" @click="previousQuestion" x-show="currentQuestionIndex > 0"
-                x-transition>
-                <i class="bi bi-chevron-right"></i>
-            </button>
-            <button class="btn btn-dark rounded-3" @click="nextQuestion"
-                x-show="currentQuestionIndex < questions.length - 1" x-transition>
-                السؤال التالي<i class="bi bi-chevron-left me-2"></i>
-            </button>
+<style>
+    .overall-rating {
+        min-width: 200px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+    }
+
+    .ai-notes li {
+        padding-right: 1.5rem;
+        position: relative;
+    }
+
+    .ai-notes li:before {
+        position: absolute;
+        right: -1.2rem;
+    }
+
+    .highlight {
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+    }
+
+    circle {
+        transition: stroke-dashoffset 0.5s ease, stroke 0.3s ease;
+    }
+</style>
+</head>
+
+<body>
+    <div x-data="interviewReport()" class="container py-5">
+        <!-- التنقل بين الأسئلة -->
+        <div class="card shadow-sm p-4 rounded-4 mb-4">
+            <h5 class="fw-bold mb-2">السؤال <span x-text="currentQuestionIndex + 1"></span>:
+                <span x-text="questions[currentQuestionIndex].text"></span>
+            </h5>
+
+            <p class="p-0">
+                <span class="fw-bold">إجابتك:</span>
+                <span x-text="questions[currentQuestionIndex].answer"></span>
+            </p>
+
+            <div class="text-start mt-3">
+                <button class="btn btn-dark rounded-3 me-2" @click="previousQuestion" x-show="currentQuestionIndex > 0">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+                <button class="btn btn-dark rounded-3" @click="nextQuestion"
+                    x-show="currentQuestionIndex < questions.length - 1">
+                    السؤال التالي<i class="bi bi-chevron-left me-2"></i>
+                </button>
+            </div>
         </div>
-    </div>
 
+        <!-- التقييم العام -->
+        <div class="card shadow-sm p-4 rounded-4 mb-4 highlight">
+            <div class="d-flex gap-4 align-items-center">
+                <div class="overall-rating">
+                    <h5 class="fw-bold mb-2 text-muted"><i class="bi bi-stars"></i> تقييم الإجابة:</h5>
+                    <div class="d-flex align-items-center gap-2">
+                        <svg width="60" height="60" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" stroke="#eee" stroke-width="8" fill="none" />
+                            <circle cx="50" cy="50" r="40"
+                                :stroke="getRatingColor(questions[currentQuestionIndex].rating)" stroke-width="8"
+                                fill="none" stroke-dasharray="251.2"
+                                :stroke-dashoffset="251.2 - (questions[currentQuestionIndex].rating * 251.2 / 10)" />
+                        </svg>
+                        <div>
+                            <span class="fw-bold fs-4 d-block"
+                                x-text="`${questions[currentQuestionIndex].rating.toFixed(1)}/10`"></span>
+                            <small class="text-muted"
+                                x-text="questions[currentQuestionIndex].ratingDescription"></small>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- ملاحظات الذكاء الاصطناعي -->
+                <div class="ai-notes flex-grow-1">
+                    <template x-if="questions[currentQuestionIndex].strengths.length">
+                        <div class="mb-3">
+                            <h6 class="text-success fw-bold"><i class="bi bi-check-circle"></i> نقاط القوة:</h6>
+                            <ul class="list-unstyled">
+                                <template x-for="strength in questions[currentQuestionIndex].strengths">
+                                    <li class="mb-2">✓ <span x-text="strength"></span></li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
 
-    <!-- التقييم العام -->
-    <div class="card shadow-sm p-4 rounded-4 mb-4 highlight">
-        <div class="d-flex gap-4">
-            <div class="overall-rating" style="min-width: fit-content">
-                <h5 class="fw-bold d-block mb-2 text-muted"><i class="bi bi-stars"></i> تقييم الاجابة:</h5>
-                <div class="d-flex align-items-center gap-2">
-                    <svg width="30" height="30" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="40" stroke="#ddd" stroke-width="8" fill="none">
-                        </circle>
-                        <circle cx="50" cy="50" r="40"
-                            :stroke="getRatingColor(questions[currentQuestionIndex].rating)" stroke-width="8"
-                            fill="none" stroke-dasharray="251.2"
-                            :stroke-dashoffset="251.2 - (questions[currentQuestionIndex].rating * 251.2 / 10)"
-                            stroke-linecap="round"></circle>
-                    </svg>
-                    <span class="fw-bold fs-5" x-text="`${questions[currentQuestionIndex].rating}/10`"></span>
+                    <template x-if="questions[currentQuestionIndex].weaknesses.length">
+                        <div class="mb-3">
+                            <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-circle"></i> نقاط الضعف:</h6>
+                            <ul class="list-unstyled">
+                                <template x-for="weakness in questions[currentQuestionIndex].weaknesses">
+                                    <li class="mb-2">✕ <span x-text="weakness"></span></li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+
+                    <template x-if="questions[currentQuestionIndex].improvements.length">
+                        <div>
+                            <h6 class="text-primary fw-bold"><i class="bi bi-lightbulb"></i> تحسينات مقترحة:</h6>
+                            <ul class="list-unstyled">
+                                <template x-for="improvement in questions[currentQuestionIndex].improvements">
+                                    <li class="mb-2">➤ <span x-text="improvement"></span></li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
                 </div>
             </div>
-
-            <div class="overall-description flex-grow-1 fw-bold text-muted">
-                <p class="fw-bold" x-text="questions[currentQuestionIndex].ratingDescription || 'لا يوجد بعد'"></p>
-            </div>
         </div>
     </div>
 
+    <script>
+        document.addEventListener('alpine:init', () => {
+    Alpine.data('interviewReport', () => ({
+        // البيانات الأولية
+        questions: [],
+        currentQuestionIndex: 0,
 
-    <!-- AI Notes Section -->
-    <div class="card shadow-sm p-4 rounded-4 highlight mb-4">
-        <h5 class="fw-bold mb-4 text-muted"><i class="bi bi-stars"></i> ملاحظات الذكاء الاصطناعي </h5>
-        <p class="" :class="{ 'text-muted': !questions[currentQuestionIndex].aiNotes }">
-            <span x-text="questions[currentQuestionIndex].aiNotes"></span>
-        </p>
-    </div>
+        // تهيئة المكون
+        init() {
+            this.loadInitialData();
+            this.loadReportData();
+        },
 
+        // تحميل الأسئلة من sessionStorage
+        loadInitialData() {
+            const savedAnswers = JSON.parse(sessionStorage.getItem('answers')) || [];
+            this.questions = savedAnswers.map(answer => ({
+                text: answer.question,
+                answer: answer.answer,
+                rating: 0,
+                ratingDescription: 'جاري التحليل...',
+                strengths: [],
+                weaknesses: [],
+                improvements: []
+            }));
+        },
 
-</div>
+        // تحميل التقرير من sessionStorage
+        loadReportData() {
+            try {
+                const rawReport = sessionStorage.getItem('report') || '{}';
 
+                // 1. إزالة \boxed{ و }
+                const cleanedReport = rawReport
+                    .replace(/^\s*\\boxed\{\s*\{/, '{') // إزالة \boxed{ في البداية
+                    .replace(/\}\s*\}\s*$/, '}'); // إزالة } في النهاية
 
-<script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('questionNavigation', () => ({
-            questions: [{
-                    id: 1,
-                    text: 'أخبرنا المزيد عن خبرتك',
-                    answer: 'خلال وظيفتي السابقة كأخصائي تسويق في شركة XYZ، كنت مسؤولاً عن إدارة حملات التسويق عبر وسائل التواصل الاجتماعي...',
-                    aiNotes: 'رأي الذكاء الاصطناعي في السؤال رقم 1',
-                    rating: 8.5,
-                    ratingDescription: 'تقييم السؤال رقم 1',
-                },
-                {
-                    id: 2,
-                    text: 'ما هي أكبر نقاط قوتك؟',
-                    answer: 'أنا جيد في العمل الجماعي وحل المشكلات بسرعة...',
-                    aiNotes: 'رأي الذكاء الاصطناعي في السؤال رقم 2',
-                    rating: 9.0,
-                    ratingDescription: 'تقييم السؤال رقم 2',
-                },
-                {
-                    id: 3,
-                    text: 'ما هي التحديات التي واجهتها في عملك السابق؟',
-                    answer: 'واجهت تحديًا في إدارة الوقت بسبب كثرة المهام...',
-                    aiNotes: 'رأي الذكاء الاصطناعي في السؤال رقم 3',
-                    rating: 7.0,
-                    ratingDescription: 'تقييم السؤال رقم 3',
-                },
-            ],
-            currentQuestionIndex: 0,
+                // 2. تنظيف النص من الرموز غير المرغوبة (إن وجدت)
+                const finalReport = cleanedReport
+                    .replace(/\\n/g, '') // إزالة \n
+                    .replace(/\\"/g, '"') // استبدال \" بـ "
+                    .trim(); // إزالة المسافات الزائدة
 
-            nextQuestion() {
-                if (this.currentQuestionIndex < this.questions.length - 1) {
-                    this.currentQuestionIndex++;
-                }
-            },
+                // 3. تحويل النص إلى كائن JSON
+                const report = JSON.parse(finalReport);
 
-            previousQuestion() {
-                if (this.currentQuestionIndex > 0) {
-                    this.currentQuestionIndex--;
-                }
-            },
-            getRatingColor(rating) {
-                if (rating >= 8.0) {
-                    return '#28a745'; // Green for high ratings
-                } else if (rating >= 5.0) {
-                    return '#ffc107'; // Yellow for medium ratings
-                } else {
-                    return '#dc3545'; // Red for low ratings
-                }
-            },
-        }));
-    });
-</script>
+                // 4. تحميل البيانات إلى الأسئلة
+                this.questions = this.questions.map(question => {
+                    const analysis = report.analysis.find(item =>
+                        item.question === question.text
+                    );
+
+                    return {
+                        ...question,
+                        rating: report.analysis[this.currentQuestionIndex]?.report?.score || 0,
+                        ratingDescription: this.generateRatingDescription(report.analysis[this.currentQuestionIndex]?.report?.score),
+                        strengths: report.analysis[this.currentQuestionIndex]?.report?.strengths || [],
+                        weaknesses: report.analysis[this.currentQuestionIndex]?.report?.weaknesses || [],
+                        improvements: report.analysis[this.currentQuestionIndex]?.report?.improvements || []
+                    };
+                });
+            } catch (error) {
+                console.error('Error loading report:', error);
+                alert('حدث خطأ في تحميل التقرير');
+            }
+        },
+
+        // توليد وصف التقييم
+        generateRatingDescription(score) {
+            if (score >= 9) return 'أداء متميز 🏆';
+            if (score >= 7) return 'جيد مع إمكانية التحسين 👍';
+            if (score >= 5) return 'مقبول يحتاج تطوير 💡';
+            return 'يحتاج مراجعة عاجلة ⚠️';
+        },
+
+        // توليد لون التقييم
+        getRatingColor(rating) {
+            const hue = Math.floor((rating / 10) * 120);
+            return `hsl(${hue}, 70%, 45%)`;
+        },
+
+        // التنقل بين الأسئلة
+        nextQuestion() {
+            if (this.currentQuestionIndex < this.questions.length - 1) {
+                this.currentQuestionIndex++;
+                this.loadReportData();
+            }
+        },
+
+        previousQuestion() {
+            if (this.currentQuestionIndex > 0) {
+                this.currentQuestionIndex--;
+                this.loadReportData();
+            }
+        }
+    }));
+});
+    </script>
