@@ -87,7 +87,8 @@
                 },
 
                 // Validate File Input
-                validateFile(e) {
+                validateFile(e)
+                {
                     const file = e.target.files[0];
                     this.errors.cv = null;
 
@@ -99,15 +100,19 @@
                         ];
                     const maxSize = 2 * 1024 * 1024
 
-                    if (!validTypes.includes(file.type)) {
+                    if (!validTypes.includes(file.type))
+                    {
                         this.errors.cv = 'نوع الملف غير مدعوم';
                         e.target.value = '';
-                    } else if (file.size > maxSize) {
+                    }
+                    else if (file.size > maxSize)
+                    {
                         this.errors.cv = 'الحجم الأقصى 2MB';
                         e.target.value = '';
                     }
                 },
-                async analyzeCV() {
+                async analyzeCV()
+                {
                     const fileInput = document.getElementById('cvInput');
                     const file = fileInput ? fileInput.files[0] : null;
                     this.errors.cv = null;

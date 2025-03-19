@@ -43,12 +43,12 @@
             const jobData = JSON.parse(localStorage.getItem('jobData')) || {};
             let cvData = jobData.cv || {};
             cvData = cvData.replace(/^\s*\\boxed\{\s*\{/, '{').replace(/\}\s*\}\s*$/, '}'); // إزالة }}
-            
+
             // استبدال الفواصل الزائدة (إن وجدت)
             cvData = cvData.replace(/,(\s*[\]\}])/g, '$1');
-            
+
             cvData = JSON.parse(cvData);
-            
+
             // Define section order and Arabic labels
             const sectionsOrder = [
                 'Work Experience',
@@ -57,9 +57,9 @@
                 'Projects',
                 'Certifications',
                 'Professional Summary',
-                'ATS'
+
             ];
-            
+
             const sectionLabels = {
                 'Work Experience': 'الخبرة',
                 'Education': 'التعليم',
@@ -67,7 +67,6 @@
                 'Projects': 'المشاريع',
                 'Certifications': 'الشهادات',
                 'Professional Summary': 'الملخص المهني',
-                'ATS': 'ATS'
             };
 
             // Generate dynamic data arrays
@@ -75,7 +74,7 @@
             const labels = sectionsOrder.map(section => sectionLabels[section]);
             const descriptions = sectionsOrder.map(section => cvData[section]?.recom || '');
 
-           
+
             return {
                 selectedIndex: 0,
                 percentages,
@@ -87,7 +86,7 @@
                     const average = total / this.percentages.length;
                     return (average / 10).toFixed(1);
                 },
-                
+
 
                 getColor(percent) {
                     if (percent >= 80) return '#28a745';
@@ -96,7 +95,7 @@
                 },
 
                 getOverallScoreColor(score) {
-                
+
                     console.log(cvData);
                     if (score >= 8) return 'text-success';
                     if (score >= 6) return 'text-warning';
