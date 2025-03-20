@@ -71,9 +71,9 @@
                 personalityLabels: [
                     'الانفتاح',
                     'الوعي',
-                    'العصبية',
                     'الاجتهاد',
-                    'الوفاق'
+                    'الوفاق',
+                    'العصابية'
                 ],
                 personalityColors: ["red", "red", "green", "orange", "green"],
                 personalityDescriptions: [
