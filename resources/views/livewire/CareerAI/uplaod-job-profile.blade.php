@@ -27,7 +27,7 @@
 
                 <div class="position-relative">
                     <!-- Filtered Job Titles List -->
-                    <div class="parent position-absolute bg-light w-100 p-3 rounded-3 shadow z-3" x-show="showList"
+                    <div class="parent position-absolute bg-light w-100 p-3 rounded-3 shadow z-3" x-show="showList" x-cloak
                         @click.away="showList = false">
                         <ul class="list-unstyled rounded-3 card-control">
                             <template x-for="position in filteredPositions" :key="position . id">
@@ -53,7 +53,7 @@
 
                 <!-- Submit (Save) Button -->
                 <button type="submit" class="btn btn-dark w-100 button" :class="isLoading === false ? ' ' : ''">
-                    <div x-show="isLoading === true">
+                    <div x-show="isLoading === true" x-cloak>
                         <div class="d-flex gap-2 align-items-center justify-content-center">
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             يتم تحليل البيانات ثواني من فضلك...
@@ -62,7 +62,7 @@
                             </span>
                         </div>
                     </div>
-                    <span x-show="isLoading === false">
+                    <span x-show="isLoading === false" x-cloak>
                         متابعة
                     </span>
                 </button>

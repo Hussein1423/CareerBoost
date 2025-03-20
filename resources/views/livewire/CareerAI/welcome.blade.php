@@ -28,8 +28,8 @@
                 <p class="bolder-weight">احصل على تقرير تحليل الشخصية في خمسة مجالات رئيسية</p>
                 <ul class="checkbox-list d-flex flex-direction-column gap-2 list-unstyled">
                     <li><i class="fa-regular fa-circle-check fs-5"></i> الانفتاح</li>
-                    <li><i class="fa-regular fa-circle-check fs-5"></i> الضمير الحي</li>
-                    <li><i class="fa-regular fa-circle-check fs-5"></i> الانبساطية</li>
+                    <li><i class="fa-regular fa-circle-check fs-5"></i> الوعي</li>
+                    <li><i class="fa-regular fa-circle-check fs-5"></i> الاجتهاد</li>
                     <li><i class="fa-regular fa-circle-check fs-5"></i> التوافق</li>
                     <li><i class="fa-regular fa-circle-check fs-5"></i> العصابية</li>
                 </ul>
