@@ -4,8 +4,8 @@
 
 <div style="margin-top: 100px">
     <div class="card p-4 my-3" style="width: 100%; max-width: 600px;">
-        <h6 class="text-muted mb-3">السؤال <span id="question-number">1</span></h6>
-        <h5 class="mb-4 fw-bold"><i class="bi bi-stars"></i> <span id="question-text">كيف تصف مهاراتك في التواصل؟</span>
+        <h6 class="text-muted mb-3"><i class="bi bi-stars"></i> السؤال <span id="question-number">1</span></h6>
+        <h5 class="mb-4 fw-bold"> <span id="question-text">كيف تصف مهاراتك في التواصل؟</span>
         </h5>
         <div class="textarea-container mt-3">
             <!-- رسالة الخطأ -->
