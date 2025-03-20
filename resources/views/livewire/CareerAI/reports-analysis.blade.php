@@ -14,7 +14,7 @@
             <!-- تحليل الشخصية -->
             <div x-show="activeTab === 'personality'">
                 @include('livewire.CareerAI.shared.personality')
-            </div>
+        </div>
 
             <!-- تحليل المهارات التقنية -->
             <div x-show="activeTab === 'technical'">
@@ -37,7 +37,7 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('app', () => ({
-                activeTab: 'resume', // القسم النشط افتراضيًا
+                activeTab: 'personality', // القسم النشط افتراضيًا
                 selectedIndex: 0, // الفهرس المحدد
 
                 // بيانات تحليل الشخصية

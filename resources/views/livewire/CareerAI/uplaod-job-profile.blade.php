@@ -44,7 +44,7 @@
 
                 <!-- Job Description (Generated) -->
                 <div class="mb-4">
-                    <label class="form-label">وصف الوظيفة:</label>
+                    <label class="form-label">وصف الوظيفة (افتراضي وقابل للتعديل):</label>
                     <textarea class="form-control" rows="4" placeholder="مثلاً: مسؤول عن تطوير التطبيقات البرمجية"
                         x-model="jobDescription" x-init="autoResize($el)" x-on:input="autoResize($el)"
                         style="resize: none; overflow: hidden; max-height: 400px;"></textarea>
