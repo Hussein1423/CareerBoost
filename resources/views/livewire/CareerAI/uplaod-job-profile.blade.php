@@ -1,5 +1,5 @@
 @push('cssContent')
-    <link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
+<link rel="stylesheet" href="{{asset('careerAI-css/uplaod-job-profile.css')}}">
 @endpush
 <div>
     <div x-data="jobDesc()" x-init="watchJobDescription" class="flex flex-col justify-between">
@@ -27,8 +27,8 @@
 
                 <div class="position-relative">
                     <!-- Filtered Job Titles List -->
-                    <div class="parent position-absolute bg-light w-100 p-3 rounded-3 shadow z-3" x-show="showList" x-cloak
-                        @click.away="showList = false">
+                    <div class="parent position-absolute bg-light w-100 p-3 rounded-3 shadow z-3" x-show="showList"
+                        x-cloak @click.away="showList = false">
                         <ul class="list-unstyled rounded-3 card-control">
                             <template x-for="position in filteredPositions" :key="position . id">
                                 <li class="w-100 text-end p-2 pointer" @click="selectPosition(position)">
@@ -155,6 +155,7 @@ ${exFile}
 الوصف الوظيفي: ${this.jobDescription}
 
 يرجى تقديم النتيجة باللغة العربية بالكامل وبصيغة JSON كما يلي:
+\\boxed{
 {
   "ATS": { "score": <الدرجة>, "recom": "<النصائح>" },
   "Work Experience": { "score": <الدرجة>, "recom": "<النصائح>" },
@@ -164,7 +165,7 @@ ${exFile}
   "Certifications": { "score": <الدرجة>, "recom": "<النصائح>" },
   "Professional Summary": { "score": <الدرجة>, "recom": "<النصائح>" }
 }
-
+                }
 يرجى التأكد من استخدام أسماء المفاتيح المذكورة أعلاه دون أي تغيير أو إضافة مفاتيح جديدة.
 `;
 
