@@ -33,7 +33,7 @@
     <div class="highlight card shadow-sm p-4 rounded-4 mt-4">
         <h5 class="fw-bold mb-3"><i class="bi bi-stars"></i> تقييم السيرة الذاتية العام: <span
                 :class="getOverallScoreColor(overallScore)" x-text="overallScore + '/10'"></span></h5>
-        <p>تفاصيل خاصة ومقترحة على السيرة الذاتية</p>
+        <p x-text="ATSdescriptions"></p>
     </div>
 </div>
 
@@ -73,6 +73,8 @@
             const percentages = sectionsOrder.map(section => cvData[section]?.score || 0);
             const labels = sectionsOrder.map(section => sectionLabels[section]);
             const descriptions = sectionsOrder.map(section => cvData[section]?.recom || '');
+            const ATSdescriptions = cvData.ATS?.recom || '';
+
 
 
             return {
@@ -80,6 +82,7 @@
                 percentages,
                 labels,
                 descriptions,
+                ATSdescriptions: ATSdescriptions,
 
                 get overallScore() {
                     const total = this.percentages.reduce((sum, percent) => sum + percent, 0);
