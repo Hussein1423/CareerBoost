@@ -44,10 +44,13 @@
         Alpine.data('personalAnalysis', () => {
             // استرجاع بيانات تحليل الشخصية من sessionStorage
             let personalData = sessionStorage.getItem('personalityDimensions') || '{"analysis": {}}';
-            personalData = personalData.replace(/^\\boxed\{|}$/g, ''); // إزالة أي تنسيق Boxed
+            personalData = personalData.replace(/^\s*\\boxed\{\s*\{/, '{') // إزالة \boxed{ في البداية
+            .replace(/\}\s*\}\s*$/, '}');
+            personalData = personalData
             personalData = JSON.parse(personalData);
-            let dimensions = personalData.analysis?.dimensions || {};
-            let score = personalData.analysis?.score || {};
+            console.log(personalData.analysis[0].dimensions );
+            let dimensions = personalData.analysis[0].dimensions || {};
+            let score = personalData.analysis[0].score || {};
 
             return {
                 selectedIndex: 0, // الفهرس المحدد
@@ -82,8 +85,8 @@
                 ],
 
                 // التقييم والتحسينات
-                evaluation: personalData.analysis?.evaluation || "لا يوجد تقييم متاح.",
-                improvements: personalData.analysis?.improvements || []
+                evaluation: personalData.analysis[0].evaluation || "لا يوجد تقييم متاح.",
+                improvements: personalData.analysis[0].improvements || []
             };
         });
     });
