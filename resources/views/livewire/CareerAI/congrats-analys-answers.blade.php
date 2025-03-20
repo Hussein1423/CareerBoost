@@ -1,31 +1,33 @@
-<div dir="rtl" class="d-flex justify-content-center align-items-center" style="height: 90vh;"
-    x-data="interviewReport()">
+<div dir="rtl" class="d-flex justify-content-center align-items-center" style="height: 90vh;" x-data="interviewReport()"
+    x-init="analyzeAnswers()">
     <div class="container text-center">
         <template x-if="!isLoading && !analysisResult">
             <div>
                 <h3>تهانينا! <span class="fs-3">🎉</span> تم إرسال مقابلتك بنجاح.</h3>
                 <p>شكراً لإجراء المقابلة معنا. نحن حالياً نقوم بتحليل إجاباتك لإنشاء تقرير تفصيلي عن أدائك.</p>
-                <button @click="analyzeAnswers" class="btn btn-dark p-3 py-2">عرض تقرير المقابلة</button>
+                <button class="btn btn-dark p-3 py-2">عرض تقرير المقابلة</button>
             </div>
         </template>
 
         <template x-if="isLoading">
             <div class="loading-section">
-                <div class="spinner-border text-primary mb-3" role="status"></div>
                 <h4>جاري تحليل الإجابات...</h4>
                 <p>الوقت المنقضي: <span x-text="timer"></span> ثانية</p>
+                <p class="alert alert-warning" x-show="timer > 30">
+                    قد تستغرق عملية التحليل وقتًا أطول، وقد تصل مدة الانتظار إلى 200 ثانية...
+                </p>
+                <div class="spinner-border text-dark mb-3" role="status"></div>
             </div>
         </template>
     </div>
 </div>
 
-
 <script>
     window.env =
-        {
-            API_KEY: "{{ env('API_KEY') }}",
-            MODEL: "{{ env('MODEL') }}"
-        };
+    {
+        API_KEY: "{{ env('API_KEY') }}",
+        MODEL: "{{ env('MODEL') }}"
+    };
     document.addEventListener('alpine:init', () => {
         Alpine.data('interviewReport', () => ({
             API_KEY: window.env.API_KEY,
@@ -37,45 +39,45 @@
             analysisResult: null,
 
             async analyzeAnswers() {
-    try {
-        this.isLoading = true;
-        this.startTimer();
+                try {
+                    this.isLoading = true;
+                    this.startTimer();
 
-        // استرجاع الإجابات من sessionStorage
-        const answers = JSON.parse(sessionStorage.getItem('answers')) || [];
+                    // استرجاع الإجابات من sessionStorage
+                    const answers = JSON.parse(sessionStorage.getItem('answers')) || [];
 
-        // بناء prompt للذكاء الاصطناعي
-        const prompt = this.buildAnalysisPrompt(answers);
+                    // بناء prompt للذكاء الاصطناعي
+                    const prompt = this.buildAnalysisPrompt(answers);
 
-        // إرسال الطلب إلى API
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${this.API_KEY}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: this.MODEL,
-                messages: [{ role: "user", content: prompt }],
-                temperature: 0.7
-            })
-        });
+                    // إرسال الطلب إلى API
+                    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${this.API_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            model: this.MODEL,
+                            messages: [{ role: "user", content: prompt }],
+                            temperature: 0.7
+                        })
+                    });
 
-        const data = await response.json();
-        this.analysisResult = data.choices[0].message.content;
+                    const data = await response.json();
+                    this.analysisResult = data.choices[0].message.content;
 
-        // حفظ النتيجة في sessionStorage
-        sessionStorage.setItem('report', this.analysisResult);
-        window.location.href = 'http://127.0.0.1:8000/ReportsAnalysis';
-    } catch (error) {
-        console.error('Error:', error);
-        alert('حدث خطأ أثناء التحليل، يرجى المحاولة مرة أخرى');
-    } finally {
-        this.isLoading = false;
-        this.stopTimer();
-    }
-}
-,
+                    // حفظ النتيجة في sessionStorage
+                    sessionStorage.setItem('report', this.analysisResult);
+                    window.location.href = 'http://127.0.0.1:8000/ReportsAnalysis';
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('حدث خطأ أثناء التحليل، يرجى المحاولة مرة أخرى');
+                } finally {
+                    this.isLoading = false;
+                    this.stopTimer();
+                }
+            }
+            ,
 
             buildAnalysisPrompt(answers) {
                 const prompt = `
@@ -102,8 +104,8 @@
 ### البيانات الخام:
 الأسئلة والإجابات:
 ${answers.map((a, i) =>
-  `${i + 1}. السؤال: ${a.question}\n   الإجابة: ${a.answer}`
-).join('\n\n')}
+                    `${i + 1}. السؤال: ${a.question}\n   الإجابة: ${a.answer}`
+                ).join('\n\n')}
 
 ### التعليمات التفصيلية:
 - ابدأ التحليل بعبارة "بدأ التحليل" (كتعليق داخل الـ JSON)
