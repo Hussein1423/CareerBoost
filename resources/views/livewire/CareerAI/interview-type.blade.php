@@ -66,6 +66,8 @@
   sessionStorage.removeItem('questions');
   sessionStorage.removeItem('answers');
   sessionStorage.removeItem('report');
+    sessionStorage.removeItem('personalityDimensions');
+    sessionStorage.removeItem('techDimensions');
       Alpine.data('questionsGen', () => ({
         API_KEY: window.env.API_KEY,
     MODEL: window.env.MODEL,

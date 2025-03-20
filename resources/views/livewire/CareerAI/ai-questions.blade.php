@@ -20,6 +20,8 @@
 
 <script>
     sessionStorage.removeItem('report');
+    sessionStorage.removeItem('personalityDimensions');
+    sessionStorage.removeItem('techDimensions');
     // قراءة البيانات من sessionStorage
     const questionsData = JSON.parse(sessionStorage.getItem('questions'));
 
