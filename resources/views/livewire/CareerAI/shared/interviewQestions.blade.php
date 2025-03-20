@@ -2,7 +2,6 @@
     .overall-rating {
         min-width: 200px;
         padding: 15px;
-        background: #f8f9fa;
         border-radius: 10px;
     }
 
@@ -53,11 +52,11 @@
 
         <!-- التقييم العام -->
         <div class="card shadow-sm p-4 rounded-4 mb-4 highlight">
-            <div class="d-flex gap-4 align-items-center">
+            <div class="d-flex gap-4 align-items-start">
                 <div class="overall-rating">
                     <h5 class="fw-bold mb-2 text-muted"><i class="bi bi-stars"></i> تقييم الإجابة:</h5>
                     <div class="d-flex align-items-center gap-2">
-                        <svg width="60" height="60" viewBox="0 0 100 100">
+                        <svg width="45" height="45" viewBox="0 0 100 100">
                             <circle cx="50" cy="50" r="40" stroke="#eee" stroke-width="8" fill="none" />
                             <circle cx="50" cy="50" r="40"
                                 :stroke="getRatingColor(questions[currentQuestionIndex].rating)" stroke-width="8"
@@ -67,8 +66,7 @@
                         <div>
                             <span class="fw-bold fs-4 d-block"
                                 x-text="`${questions[currentQuestionIndex].rating.toFixed(1)}/10`"></span>
-                            <small class="text-muted"
-                                x-text="questions[currentQuestionIndex].ratingDescription"></small>
+
                         </div>
                     </div>
                 </div>
@@ -80,7 +78,7 @@
                             <h6 class="text-success fw-bold"><i class="bi bi-check-circle"></i> نقاط القوة:</h6>
                             <ul class="list-unstyled">
                                 <template x-for="strength in questions[currentQuestionIndex].strengths">
-                                    <li class="mb-2">✓ <span x-text="strength"></span></li>
+                                    <li class="mb-2"> <span x-text="strength"></span></li>
                                 </template>
                             </ul>
                         </div>
@@ -88,10 +86,10 @@
 
                     <template x-if="questions[currentQuestionIndex].weaknesses.length">
                         <div class="mb-3">
-                            <h6 class="text-danger fw-bold"><i class="bi bi-exclamation-circle"></i> نقاط الضعف:</h6>
+                            <h6 class="text-dark fw-bold"><i class="bi bi-exclamation-circle"></i> نقاط الضعف:</h6>
                             <ul class="list-unstyled">
                                 <template x-for="weakness in questions[currentQuestionIndex].weaknesses">
-                                    <li class="mb-2">✕ <span x-text="weakness"></span></li>
+                                    <li class="mb-2"> • <span x-text="weakness"></span></li>
                                 </template>
                             </ul>
                         </div>
@@ -99,10 +97,10 @@
 
                     <template x-if="questions[currentQuestionIndex].improvements.length">
                         <div>
-                            <h6 class="text-primary fw-bold"><i class="bi bi-lightbulb"></i> تحسينات مقترحة:</h6>
+                            <h6 class="text-dark fw-bold"><i class="bi bi-lightbulb"></i> تحسينات مقترحة:</h6>
                             <ul class="list-unstyled">
                                 <template x-for="improvement in questions[currentQuestionIndex].improvements">
-                                    <li class="mb-2">➤ <span x-text="improvement"></span></li>
+                                    <li class="mb-2"> • <span x-text="improvement"></span></li>
                                 </template>
                             </ul>
                         </div>
