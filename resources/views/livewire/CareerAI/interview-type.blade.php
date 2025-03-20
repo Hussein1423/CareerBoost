@@ -7,6 +7,7 @@
     <div class="container text-center" x-data="questionsGen()">
         <div class="row my-4">
             <h3 class="my-5">اختر نوع المقابلة التي تريد محاكاتها</h3>
+            <p x-show="errors" x-text="errors" class="text-red-500 mt-2"></p>
             <!-- Card 1 -->
             <div class="col-md-4">
                 <div class="card p-5" :class="{ 'selected': selectedCard === 1 }" @click="selectedCard = 1">
@@ -36,12 +37,12 @@
         <div class="d-flex justify-content-center my-5">
 
             <button type="button" class="btn btn-lg btn-dark my-3 px-5 button" @click="generateQuestions">
-                <span x-show="!isLoading" >
+                <span x-show="!isLoading">
                     متابعة
                 </span>
 
                 <!-- Loading State -->
-                <span x-show="isLoading" >
+                <span x-show="isLoading">
                     <div class="d-flex gap-2 align-items-center justify-content-center">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         يتم الان تجهيز الاسئلة ثواني من فضلك...
@@ -111,8 +112,7 @@ technicalQuestionsTemplate() {
 },
 
 softQuestionsTemplate() {
-   return `أنشئ قائمة أسئلة مقابلة عمل بالعربية للوظيفة: "${this.jobTitle}"
-       و اعتمادا على "${this.description}"
+   return `أنشئ قائمة أسئلة مقابلة عمل بالعربية للوظيفة:
 ━━━━━━━━━━━━━━━━━━━━━━━
 المتطلبات:
 ### الأسئلة الناعمة ###
@@ -142,11 +142,8 @@ bothQuestionsTemplate() {
 }
 ,
 
-        async generateQuestions() {
-
-
-
-
+  async generateQuestions()
+  {
   if (this.selectedCard === 1) {
       this.questionTypes = { technical: false, soft: true };
     } else if (this.selectedCard === 2) {
@@ -190,11 +187,14 @@ bothQuestionsTemplate() {
   this.parseQuestions(content);
   this.isLoading = false;
 
-  window.location.href = 'http://127.0.0.1:8000/AI_questions';
+  if (this.softQuestions.length === 0 && this.technicalQuestions.length === 0)
+  {
+            this.errors = 'لم يتم تكوين الأسئلة، حاول مرة أخرى!';
+            return;
+  }
+        window.location.href = 'http://127.0.0.1:8000/AI_questions';
 
 },
-
-
 
         parseQuestions(content) {
           const technicalMatch = content.match(
