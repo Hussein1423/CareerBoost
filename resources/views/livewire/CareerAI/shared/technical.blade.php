@@ -8,8 +8,8 @@
                 <div class="progress-circle d-flex align-items-center justify-content-between gap-2 mt-3">
                     <svg width="30" height="30" viewBox="0 0 70 70">
                         <circle cx="35" cy="35" r="30" class="bg"></circle>
-                        <circle cx="35" cy="35" r="30" stroke-width="8" :stroke="technicalColors[index]"
-                            stroke-dasharray="188.4" :stroke-dashoffset="188.4 - (188.4 * percent / 100)">
+                        <circle cx="35" cy="35" r="30" stroke-width="8" :stroke="getColor(percent)"
+                            stroke-dasharray="188.4" :stroke-dashoffset="188.4 - (188.4 * percent / 10)">
                         </circle>
                     </svg>
                     <span class="progress-value" x-text="percent + '%'"></span>
@@ -72,6 +72,11 @@
                     dimensions.teamwork || "لا يوجد تحليل متاح.",
                     dimensions.adaptability || "لا يوجد تحليل متاح."
                 ],
+                getColor(percent) {
+                    if (percent >= 8) return '#28a745';
+                    if (percent >= 6) return '#ffc107';
+                    return '#dc3545';
+                },
                 // التقييم والاقتراحات
                 evaluation: techData.analysis?.evaluation || "لا يوجد تقييم متاح.",
                 improvements: techData.analysis?.improvements || []

@@ -3,14 +3,13 @@
     <!-- عرض النسب -->
     <div class="card shadow-sm p-4 d-flex flex-row justify-content-around rounded-4">
         <template x-for="(percent, index) in personalityPercentages" :key="index">
-            <div class="text-end bg-primary rounded-4 p-3"
-                @click="selectedIndex = index">
+            <div class="text-end bg-primary rounded-4 p-3" @click="selectedIndex = index">
                 <h6 class="progress-label" x-text="personalityLabels[index]"></h6>
                 <div class="progress-circle d-flex align-items-center justify-content-between gap-2 mt-3">
                     <svg width="30" height="30" viewBox="0 0 70 70">
                         <circle cx="35" cy="35" r="30" class="bg"></circle>
                         <circle cx="35" cy="35" r="30" stroke-width="8" :stroke="getColor(percent) "
-                            stroke-dasharray="188.4" :stroke-dashoffset="188.4 - (188.4 * percent / 100)">
+                            stroke-dasharray="188.4" :stroke-dashoffset="188.4 - (188.4 * percent / 10)">
                         </circle>
                     </svg>
                     <span class="progress-value" x-text="percent + '%'"></span>
@@ -65,8 +64,8 @@
                     score.neuroticism || 0
                 ],
                 getColor(percent) {
-                    if (percent >= 80) return '#28a745';
-                    if (percent >= 60) return '#ffc107';
+                    if (percent >= 8) return '#28a745';
+                    if (percent >= 6) return '#ffc107';
                     return '#dc3545';
                 },
                 personalityLabels: [
